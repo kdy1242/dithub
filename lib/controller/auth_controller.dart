@@ -27,7 +27,7 @@ class AuthController extends GetxController {
       user(value);
       if (value != null) {
         // 유저가 있는 상태
-        Get.offAllNamed(AppRoutes.main);
+        Get.offAllNamed(AppRoutes.setName);
       } else {
         // 유저가 없는 상태
         Get.offAllNamed(AppRoutes.login);
