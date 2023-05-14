@@ -1,5 +1,4 @@
 
-import 'package:dithub/controller/main_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,8 @@ import 'controller/auth_controller.dart';
 import 'controller/login_controller.dart';
 import 'controller/signup_controller.dart';
 import 'controller/set_name_controller.dart';
+import 'controller/main_controller.dart';
+import 'controller/setting_controller.dart';
 import 'util/app_pages.dart';
 import 'util/app_routes.dart';
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         Get.lazyPut(() => SignupController(), fenix: true);
         Get.lazyPut(() => SetNameController(), fenix: true);
         Get.lazyPut(() => MainController(), fenix: true);
+        Get.lazyPut(() => SettingController(), fenix: true);
       }),
       getPages: AppPages.pages,
       initialRoute: AppRoutes.login,

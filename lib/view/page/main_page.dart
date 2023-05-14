@@ -18,10 +18,11 @@ class MainPage extends GetView<MainController> {
       appBar: AppBar(
         automaticallyImplyLeading: false,   // 자동 뒤로가기 버튼 생성 비활성화
         title: Image.asset(Logo.logo),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: PageView.builder(
+        physics: NeverScrollableScrollPhysics(),
         controller: controller.pageController,
         itemCount: controller.screens.length,
         itemBuilder: (context, index) {
@@ -46,6 +47,7 @@ class MainPage extends GetView<MainController> {
       // ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          backgroundColor: Colors.white,
           elevation: 0,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.black,
