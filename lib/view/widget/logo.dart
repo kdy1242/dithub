@@ -1,4 +1,4 @@
 
 class Logo {
-  static const logo = '';
+  static const logo = 'assets/images/logo.png';
 }
