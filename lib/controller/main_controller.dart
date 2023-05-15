@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:dithub/view/screen/friends_screen.dart';
 import 'package:dithub/view/screen/home_screen.dart';
 import 'package:dithub/view/screen/setting_screen.dart';
@@ -31,8 +33,7 @@ class MainController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-    AuthService().saveUserInfoToFirestore(user!);
+    log('main onInit: ${FirebaseAuth.instance.currentUser!.displayName}');
   }
 
   @override

@@ -28,8 +28,8 @@ class HomeScreen extends GetView<HomeController> {
                       child: CircleAvatar(
                         radius: 36,
                         backgroundImage: controller.user!.photoURL != null
-                            ? NetworkImage(controller.user!.photoURL!)
-                            : null,
+                          ? NetworkImage(controller.user!.photoURL!)
+                          : null,
                       ),
                     ),
                     SizedBox(height: 8),
@@ -42,6 +42,7 @@ class HomeScreen extends GetView<HomeController> {
                     ),
                   ],
                 ),
+                TextButton(onPressed: controller.test, child: Text('ㅌㅅㅌ'),),
               ],
             ),
           )

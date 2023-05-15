@@ -27,7 +27,7 @@ class AuthController extends GetxController {
       user(value);
       if (value != null) {
         // 유저가 있는 상태
-        if (user.value!.metadata.creationTime == user.value!.metadata.lastSignInTime) { // 계정 생성 후 첫 로그인
+        if (user.value!.metadata.creationTime == user.value!.metadata.lastSignInTime) {    // 계정 생성 후 첫 로그인
           Get.offAllNamed(AppRoutes.setName);
         } else {
           Get.offAllNamed(AppRoutes.main);

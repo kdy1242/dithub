@@ -1,8 +1,5 @@
 
-
-import 'package:dithub/controller/auth_controller.dart';
 import 'package:dithub/view/widget/logo.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +13,7 @@ class MainPage extends GetView<MainController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         automaticallyImplyLeading: false,   // 자동 뒤로가기 버튼 생성 비활성화
         title: Image.asset(Logo.logo),
         backgroundColor: Colors.white,

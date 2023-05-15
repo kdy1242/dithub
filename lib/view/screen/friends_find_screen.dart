@@ -1,7 +1,11 @@
 
+import 'package:dithub/controller/friends_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class FriendsFindScreen extends StatelessWidget {
+import '../../util/fonts.dart';
+
+class FriendsFindScreen extends GetView<FriendsController> {
   const FriendsFindScreen({Key? key}) : super(key: key);
 
   @override
@@ -23,16 +27,46 @@ class FriendsFindScreen extends StatelessWidget {
                 SizedBox(width: 8),
                 Expanded(
                   child: TextField(
+                    controller: controller.searchEmailController,
                     decoration: InputDecoration(
                       hintText: '이메일로 검색',
                       border: InputBorder.none,
                       isCollapsed: true,
                     ),
+                    onSubmitted: (String value) {
+                      controller.searchFriend();
+                    },
                   ),
                 )
               ],
             ),
           ),
+        ),
+        Obx(() => controller.searchResult.value != null
+          ? ListTile(
+              leading: CircleAvatar(
+                radius: 36,
+                backgroundImage: controller.searchResult.value!.profileImg != null
+                  ? NetworkImage(controller.searchResult.value!.profileImg!)
+                  : null,
+              ),
+              title: Text(controller.searchResult.value!.name),
+              subtitle: Text(controller.searchResult.value!.email),
+              trailing: Container(
+                width: 80,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      elevation: 0
+                  ),
+                  onPressed: controller.followFriend,
+                  child: Text('팔로우', style: NotoSans.regular),
+                ),
+              ),
+            )
+          : Container(),
         )
       ]
     );

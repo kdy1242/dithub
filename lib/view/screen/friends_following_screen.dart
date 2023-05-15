@@ -1,13 +1,44 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class FriendsFollowingScreen extends StatelessWidget {
+import '../../controller/friends_controller.dart';
+import '../../util/fonts.dart';
+
+class FriendsFollowingScreen extends GetView<FriendsController> {
   const FriendsFollowingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('팔로잉'),
+    return Obx(
+      () => ListView.builder(
+        itemCount: controller.followingList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: CircleAvatar(
+              radius: 36,
+              backgroundImage: controller.followingList[index].profileImg != null
+                ? NetworkImage(controller.followingList[index].profileImg!)
+                : null,
+            ),
+            title: Text(controller.followingList[index].name),
+            subtitle: Text(controller.followingList[index].email),
+            trailing: Container(
+              width: 80,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  elevation: 0
+                ),
+                onPressed: (){},
+                child: Text('삭제', style: NotoSans.regular),
+              ),
+            ),
+          );
+        }
+      ),
     );
   }
 }

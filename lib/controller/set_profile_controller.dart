@@ -1,6 +1,8 @@
 
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +37,7 @@ class SetProfileController extends GetxController {
 
     user!.updateDisplayName(nameController.text);
 
-    AuthService().saveUserInfoToFirestore(user!);
+    // AuthService().saveUserInfoToFirestore(FirebaseAuth.instance.currentUser!);
 
     Get.offAllNamed(AppRoutes.main);
   }
@@ -44,5 +46,18 @@ class SetProfileController extends GetxController {
   void onInit() {
     super.onInit();
     nameController.text = user!.displayName ?? '';
+  }
+
+  @override
+  void onClose() async {
+    super.onClose();
+
+    log('set profile onClosed: ${FirebaseAuth.instance.currentUser!.displayName}');
+    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+      'uid': FirebaseAuth.instance.currentUser!.uid,
+      'email': FirebaseAuth.instance.currentUser!.email,
+      'name': FirebaseAuth.instance.currentUser!.displayName,
+      'profileImg': FirebaseAuth.instance.currentUser!.photoURL,
+    });
   }
 }
