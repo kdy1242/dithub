@@ -7,38 +7,42 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../service/auth_service.dart';
 import '../util/app_routes.dart';
 import 'auth_controller.dart';
 
-class SetNameController extends GetxController {
-
+class SetProfileController extends GetxController {
   TextEditingController nameController = TextEditingController();
-
   User? get user => Get.find<AuthController>().user.value;
-
+  Rxn<File> selectedImage = Rxn();
 
   addProfilePhoto() async {
     var picker = ImagePicker();
     var res = await picker.pickImage(source: ImageSource.gallery);
     if (res != null) {
-      // 스토리지 올리기
-      var ref = FirebaseStorage.instance.ref('profile/${user!.uid}');
-      await ref.putFile(File(res.path));
-      var downloadUrl = await ref.getDownloadURL();
-      print(downloadUrl);
-      // downloadUrl 받기
-      user!.updatePhotoURL(downloadUrl);
+      selectedImage(File(res.path));
     }
   }
 
-  onTapStartBtn() {
+  onTapStartBtn() async {
+    if (selectedImage.value != null) {
+      var ref = FirebaseStorage.instance.ref('profile/${user!.uid}');
+      await ref.putFile(selectedImage.value!);
+      var downloadUrl = await ref.getDownloadURL();
+      print(downloadUrl);
+      user!.updatePhotoURL(downloadUrl);
+    }
+
     user!.updateDisplayName(nameController.text);
-    Get.toNamed(AppRoutes.main);
+
+    AuthService().saveUserInfoToFirestore(user!);
+
+    Get.offAllNamed(AppRoutes.main);
   }
 
   @override
   void onInit() {
     super.onInit();
-    nameController.text = user!.displayName ?? '이름 입력';
+    nameController.text = user!.displayName ?? '';
   }
 }

@@ -34,4 +34,11 @@ class MainController extends GetxController {
 
     AuthService().saveUserInfoToFirestore(user!);
   }
+
+  @override
+  void onClose() {
+    super.onClose();
+    pageController.dispose();
+    curPage(0);
+  }
 }

@@ -2,18 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/set_name_controller.dart';
+import '../../controller/set_profile_controller.dart';
 import '../../util/fonts.dart';
 
-class SetNamePage extends GetView<SetNameController> {
-  const SetNamePage({Key? key}) : super(key: key);
-  static const String route = '/setName';
+class SetProfilePage extends GetView<SetProfileController> {
+  const SetProfilePage({Key? key}) : super(key: key);
+  static const String route = '/setProfile';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Obx(() => Padding(
+        child: Padding(
           padding: const EdgeInsets.all(40.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -26,11 +26,13 @@ class SetNamePage extends GetView<SetNameController> {
                     Container(
                       width: 150,
                       height: 150,
-                      child: CircleAvatar(
-                        radius: 36,
-                        backgroundImage: controller.user!.photoURL != null
-                          ? NetworkImage(controller.user!.photoURL!)
-                          : null,
+                      child: Obx(
+                        () => CircleAvatar(
+                          radius: 36,
+                          backgroundImage: controller.selectedImage.value != null
+                            ? FileImage(controller.selectedImage.value!)
+                            : null,
+                        ),
                       ),
                     ),
                     Positioned(
@@ -74,7 +76,7 @@ class SetNamePage extends GetView<SetNameController> {
               ),
             ],
           ),
-        )),
+        )
       ),
     );
   }

@@ -29,22 +29,6 @@ class MainPage extends GetView<MainController> {
           return controller.screens[index];
         }
       ),
-      // Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       Text('main page'),
-      //       Text('${controller.user!.uid}'),
-      //       Text('${controller.user!.displayName}'),
-      //       // TextButton(
-      //       //   onPressed: (){
-      //       //     controller.logout();
-      //       //   },
-      //       //   child: Text('로그아웃')
-      //       // )
-      //     ],
-      //   ),
-      // ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           backgroundColor: Colors.white,

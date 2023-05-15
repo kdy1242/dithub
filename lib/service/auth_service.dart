@@ -43,7 +43,7 @@ class AuthService {
   saveUserInfoToFirestore(User user) async {
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'uid': user.uid,
-      'email': user.uid,
+      'email': user.email,
       'name': user.displayName,
       'profileImg': user.photoURL,
     });

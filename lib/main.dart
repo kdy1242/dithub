@@ -8,9 +8,10 @@ import 'firebase_options.dart';
 import 'controller/auth_controller.dart';
 import 'controller/login_controller.dart';
 import 'controller/signup_controller.dart';
-import 'controller/set_name_controller.dart';
+import 'controller/set_profile_controller.dart';
 import 'controller/main_controller.dart';
 import 'controller/setting_controller.dart';
+import 'controller/home_controller.dart';
 import 'util/app_pages.dart';
 import 'util/app_routes.dart';
 
@@ -32,10 +33,11 @@ class MyApp extends StatelessWidget {
         Get.put(AuthController());
         Get.lazyPut(() => LoginController(), fenix: true);
         Get.lazyPut(() => SignupController(), fenix: true);
-        Get.lazyPut(() => SetNameController(), fenix: true);
+        Get.lazyPut(() => SetProfileController(), fenix: true);
         Get.lazyPut(() => MainController(), fenix: true);
         Get.lazyPut(() => SettingController(), fenix: true);
         Get.lazyPut(() => FriendsController(), fenix: true);
+        Get.lazyPut(() => HomeController(), fenix: true);
       }),
       getPages: AppPages.pages,
       initialRoute: AppRoutes.login,

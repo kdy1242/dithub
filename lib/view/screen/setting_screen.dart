@@ -52,13 +52,16 @@ class SettingScreen extends GetView<SettingController> {
                       alignment: Alignment.topRight,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 36.0),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          child: CircleAvatar(
-                            radius: 36,
-                            child: Icon(Icons.edit, color: Colors.white),
-                            backgroundColor: Colors.grey,
+                        child: GestureDetector(
+                          onTap: controller.editProfile,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            child: CircleAvatar(
+                              radius: 36,
+                              child: Icon(Icons.edit, color: Colors.white),
+                              backgroundColor: Colors.grey,
+                            ),
                           ),
                         ),
                       ),
