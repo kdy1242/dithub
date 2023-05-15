@@ -10,14 +10,13 @@ class SettingScreen extends GetView<SettingController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: Column(
+    return Container(
+      color: Colors.grey[100],
+      child: Column(
         children: [
           Stack(
             children: [
               Container(
-                width: double.infinity,
                 height: 150,
                 color: Colors.white,
               ),
@@ -25,6 +24,7 @@ class SettingScreen extends GetView<SettingController> {
                 left: 20,
                 top: 0,
                 bottom: 0,
+                right: 0,
                 child: Row(
                   children: [
                     Container(
@@ -47,10 +47,11 @@ class SettingScreen extends GetView<SettingController> {
                         Text(controller.user!.email!, style: NotoSans.medium.copyWith(fontSize: 16, color: Colors.grey)),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 26.0, left: 26),
-                      child: Align(
-                        alignment: Alignment.topRight,
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 36.0),
                         child: Container(
                           width: 40,
                           height: 40,
@@ -62,6 +63,7 @@ class SettingScreen extends GetView<SettingController> {
                         ),
                       ),
                     ),
+                    SizedBox(width: 20),
                   ],
                 ),
               ),

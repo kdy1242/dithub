@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'controller/friends_controller.dart';
 import 'firebase_options.dart';
 import 'controller/auth_controller.dart';
 import 'controller/login_controller.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         Get.lazyPut(() => SetNameController(), fenix: true);
         Get.lazyPut(() => MainController(), fenix: true);
         Get.lazyPut(() => SettingController(), fenix: true);
+        Get.lazyPut(() => FriendsController(), fenix: true);
       }),
       getPages: AppPages.pages,
       initialRoute: AppRoutes.login,

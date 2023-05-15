@@ -40,15 +40,12 @@ class AuthService {
   }
 
   // Firestore에 사용자 정보 저장
-  saveUserInfoToFirestore(User? user, String email, String name, String profileImageUrl) async {
-    if (user != null) {
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'uid': user.uid,
-        'email': user.uid,
-        'name': user.displayName,
-        'profileImg': user.photoURL,
-        'createdAt': Timestamp.now(),
-      });
-    }
+  saveUserInfoToFirestore(User user) async {
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      'uid': user.uid,
+      'email': user.uid,
+      'name': user.displayName,
+      'profileImg': user.photoURL,
+    });
   }
 }

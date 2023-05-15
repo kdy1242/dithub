@@ -16,6 +16,7 @@ class SetNameController extends GetxController {
 
   User? get user => Get.find<AuthController>().user.value;
 
+
   addProfilePhoto() async {
     var picker = ImagePicker();
     var res = await picker.pickImage(source: ImageSource.gallery);
@@ -33,5 +34,11 @@ class SetNameController extends GetxController {
   onTapStartBtn() {
     user!.updateDisplayName(nameController.text);
     Get.toNamed(AppRoutes.main);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    nameController.text = user!.displayName ?? '이름 입력';
   }
 }

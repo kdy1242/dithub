@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../service/auth_service.dart';
 import 'auth_controller.dart';
 
 class MainController extends GetxController {
@@ -25,5 +26,12 @@ class MainController extends GetxController {
   onPageTapped(int v) {
     pageController.jumpToPage(v);
     curPage(v);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    AuthService().saveUserInfoToFirestore(user!);
   }
 }
