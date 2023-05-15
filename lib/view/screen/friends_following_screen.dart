@@ -34,7 +34,9 @@ class FriendsFollowingScreen extends GetView<FriendsController> {
                   ),
                   elevation: 0
                 ),
-                onPressed: (){},
+                onPressed: () {
+                  controller.onTapDeleteBtn(controller.followingList[index]);
+                },
                 child: Text('삭제', style: NotoSans.regular),
               ),
             ),

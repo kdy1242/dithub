@@ -72,8 +72,14 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
   }
 
   // 친구 삭제
-  onTapDeleteBtn() {
+  onTapDeleteBtn(Friend friend) async {
+    var deleteFriendId = friend.uid;
 
+    await instance.collection('following').doc(user!.uid).update({
+      'following': FieldValue.arrayRemove([deleteFriendId])
+    });
+
+    followingList.remove(friend);
   }
 
   @override
