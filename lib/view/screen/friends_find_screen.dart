@@ -46,6 +46,8 @@ class FriendsFindScreen extends GetView<FriendsController> {
           ? ListTile(
               leading: CircleAvatar(
                 radius: 36,
+                backgroundColor: Colors.grey,
+                child: controller.searchResult.value!.profileImg == null ? Icon(Icons.person, color: Colors.white) : null,
                 backgroundImage: controller.searchResult.value!.profileImg != null
                   ? NetworkImage(controller.searchResult.value!.profileImg!)
                   : null,

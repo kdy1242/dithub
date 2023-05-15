@@ -58,7 +58,7 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
     log('${res.data()}');
     if (res.data() != null) {
       List followingField = res.data()!['following'];
-      List<Friend> friendsList = followingList.value ?? [];
+      List<Friend> friendsList = [];
 
       for (var friendId in followingField) {
         var friendData = await instance.collection('users').where('uid', isEqualTo: friendId).get();
@@ -69,6 +69,11 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
       print(followingField);
       log('${friendsList}');
     }
+  }
+
+  // 친구 삭제
+  onTapDeleteBtn() {
+
   }
 
   @override

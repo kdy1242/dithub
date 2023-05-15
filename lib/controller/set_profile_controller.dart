@@ -53,7 +53,7 @@ class SetProfileController extends GetxController {
     super.onClose();
 
     log('set profile onClosed: ${FirebaseAuth.instance.currentUser!.displayName}');
-    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+    await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
       'uid': FirebaseAuth.instance.currentUser!.uid,
       'email': FirebaseAuth.instance.currentUser!.email,
       'name': FirebaseAuth.instance.currentUser!.displayName,

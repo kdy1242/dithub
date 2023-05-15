@@ -17,6 +17,8 @@ class FriendsFollowingScreen extends GetView<FriendsController> {
           return ListTile(
             leading: CircleAvatar(
               radius: 36,
+              backgroundColor: Colors.grey,
+              child: controller.followingList[index].profileImg == null ? Icon(Icons.person, color: Colors.white) : null,
               backgroundImage: controller.followingList[index].profileImg != null
                 ? NetworkImage(controller.followingList[index].profileImg!)
                 : null,

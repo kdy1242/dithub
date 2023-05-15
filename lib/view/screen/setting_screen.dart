@@ -32,6 +32,8 @@ class SettingScreen extends GetView<SettingController> {
                       height: 100,
                       child: CircleAvatar(
                         radius: 36,
+                        backgroundColor: Colors.grey,
+                        child: controller.user!.photoURL == null ? Icon(Icons.person, color: Colors.white) : null,
                         backgroundImage: controller.user!.photoURL != null
                           ? NetworkImage(controller.user!.photoURL!)
                           : null,
