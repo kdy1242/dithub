@@ -1,4 +1,5 @@
 
+import 'package:dithub/view/page/add_diary_page.dart';
 import 'package:dithub/view/page/set_profile_page.dart';
 import 'package:get/get.dart';
 
@@ -12,5 +13,6 @@ class AppPages {
     GetPage(name: LoginPage.route, page: () => const LoginPage()),
     GetPage(name: SignUpPage.route, page: () => const SignUpPage()),
     GetPage(name: SetProfilePage.route, page: () => const SetProfilePage()),
+    GetPage(name: AddDiaryPage.route, page: () => const AddDiaryPage()),
   ];
 }

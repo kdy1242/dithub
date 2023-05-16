@@ -11,7 +11,8 @@ class FriendsFollowingScreen extends GetView<FriendsController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.builder(
+      () => controller.followingList.length > 0
+      ?ListView.builder(
         itemCount: controller.followingList.length,
         itemBuilder: (context, index) {
           return ListTile(
@@ -42,7 +43,7 @@ class FriendsFollowingScreen extends GetView<FriendsController> {
             ),
           );
         }
-      ),
+      ) : Center(child: Text('친구 찾기 탭에서 친구를 찾아보세요!', style: NotoSans.medium)),
     );
   }
 }

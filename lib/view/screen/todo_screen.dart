@@ -1,9 +1,11 @@
 
+import 'package:dithub/controller/todo_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../util/fonts.dart';
 
-class TodoScreen extends StatelessWidget {
+class TodoScreen extends GetView<TodoController> {
   const TodoScreen({Key? key}) : super(key: key);
 
   @override
@@ -24,12 +26,15 @@ class TodoScreen extends StatelessWidget {
                   Positioned(
                     right: 0,
                     bottom: 0,
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        child: Icon(Icons.add, color: Colors.white),
+                    child: GestureDetector(
+                      onTap: controller.addTodo,
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          child: Icon(Icons.add, color: Colors.white),
+                        ),
                       ),
                     ),
                   )

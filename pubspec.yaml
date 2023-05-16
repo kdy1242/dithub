@@ -50,6 +50,8 @@ dependencies:
   shared_preferences: ^2.1.0
   font_awesome_flutter: ^10.4.0
   cached_network_image: ^3.2.3
+  table_calendar: ^3.0.9
+  intl: ^0.18.1
 
 
 dev_dependencies:

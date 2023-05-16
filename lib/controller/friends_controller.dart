@@ -58,16 +58,13 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
     log('${res.data()}');
     if (res.data() != null) {
       List followingField = res.data()!['following'];
-      List<Friend> friendsList = [];
 
       for (var friendId in followingField) {
         var friendData = await instance.collection('users').where('uid', isEqualTo: friendId).get();
-        friendsList.add(Friend.fromMap(friendData.docs.first.data()));
+        followingList.add(Friend.fromMap(friendData.docs.first.data()));
       }
-      followingList(friendsList);
 
       print(followingField);
-      log('${friendsList}');
     }
   }
 
