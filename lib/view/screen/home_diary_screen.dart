@@ -86,6 +86,32 @@ class HomeDiaryScreen extends GetView<DiaryController> {
                       ),
                     );
                   },
+                  markerBuilder: (context, date, events) {
+                    bool hasMarker = controller.diaryList.any((diary) {
+                      return diary.timestamp.year == date.year &&
+                          diary.timestamp.month == date.month &&
+                          diary.timestamp.day == date.day;
+                    });
+
+                    if (hasMarker) {
+                      return Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.green,
+                        ),
+                      );
+                    }
+                    return Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
