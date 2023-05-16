@@ -20,7 +20,7 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
 
   FirebaseFirestore instance = FirebaseFirestore.instance;
 
-  User? get user => Get.find<AuthController>().user.value;
+  User? get user => FirebaseAuth.instance.currentUser;
 
   final List<Tab> tabs = <Tab>[
     Tab(text: '팔로잉'),
@@ -47,9 +47,21 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
 
   // 팔로잉
   followFriend() async {
-    await instance.collection('following').doc(user!.uid).update({
-      'following': FieldValue.arrayUnion([searchResult.value!.uid]),
-    });
+    final followDocRef = instance.collection('following').doc(user!.uid);
+
+    final followDocSnapshot = await followDocRef.get();
+
+    if (followDocSnapshot.exists) {
+      // 문서가 이미 존재하는 경우 업데이트
+      await followDocRef.update({
+        'following': FieldValue.arrayUnion([searchResult.value!.uid]),
+      });
+    } else {
+      // 문서가 존재하지 않는 경우 생성
+      await followDocRef.set({
+        'following': [searchResult.value!.uid],
+      });
+    }
   }
 
   // 팔로우중인 친구 가져오기

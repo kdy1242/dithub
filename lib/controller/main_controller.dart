@@ -23,7 +23,7 @@ class MainController extends GetxController {
     SettingScreen(),
   ];
 
-  User? get user => Get.find<AuthController>().user.value;
+  User? get user => FirebaseAuth.instance.currentUser;
 
   onPageTapped(int v) {
     pageController.jumpToPage(v);

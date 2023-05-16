@@ -8,7 +8,7 @@ import '../util/app_routes.dart';
 
 class SettingController extends GetxController {
 
-  User? get user => Get.find<AuthController>().user.value;
+  User? get user => FirebaseAuth.instance.currentUser;
 
   editProfilePhoto() => Get.find<SetProfileController>().addProfilePhoto();
 

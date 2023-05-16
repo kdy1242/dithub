@@ -15,7 +15,7 @@ import 'auth_controller.dart';
 
 class SetProfileController extends GetxController {
   TextEditingController nameController = TextEditingController();
-  User? get user => Get.find<AuthController>().user.value;
+  User? get user => FirebaseAuth.instance.currentUser;
   Rxn<File> selectedImage = Rxn();
 
   addProfilePhoto() async {
@@ -35,9 +35,9 @@ class SetProfileController extends GetxController {
       user!.updatePhotoURL(downloadUrl);
     }
 
-    user!.updateDisplayName(nameController.text);
+    await user!.updateDisplayName(nameController.text);
 
-    // AuthService().saveUserInfoToFirestore(FirebaseAuth.instance.currentUser!);
+    await AuthService().saveUserInfoToFirestore(user!);
 
     Get.offAllNamed(AppRoutes.main);
   }
@@ -51,13 +51,5 @@ class SetProfileController extends GetxController {
   @override
   void onClose() async {
     super.onClose();
-
-    log('set profile onClosed: ${FirebaseAuth.instance.currentUser!.displayName}');
-    await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
-      'uid': FirebaseAuth.instance.currentUser!.uid,
-      'email': FirebaseAuth.instance.currentUser!.email,
-      'name': FirebaseAuth.instance.currentUser!.displayName,
-      'profileImg': FirebaseAuth.instance.currentUser!.photoURL,
-    });
   }
 }

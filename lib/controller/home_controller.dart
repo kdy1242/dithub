@@ -13,7 +13,7 @@ class HomeController extends GetxController {
   PageController pageController = PageController();
   RxInt curPage = 0.obs;
 
-  User? get user => Get.find<AuthController>().user.value;
+  User? get user => FirebaseAuth.instance.currentUser;
   List<Friend> get followingList => Get.find<FriendsController>().followingList;
 
   onPageTapped(int v) {

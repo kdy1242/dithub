@@ -3,11 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../model/todo.dart';
 import '../util/fonts.dart';
 
 class TodoController extends GetxController {
   TextEditingController todoController = TextEditingController();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  RxList<Todo> todoList = <Todo>[].obs;
 
   // 할일 항목을 저장하는 함수
   Future<void> saveTodoItem(String uid, String todo, bool isFinished) async {
@@ -26,6 +28,7 @@ class TodoController extends GetxController {
       });
 
       await userDocRef.update({'todos': todos});
+
     } else {
       // 새로운 문서를 생성합니다.
       List<Map<String, dynamic>> todos = [
