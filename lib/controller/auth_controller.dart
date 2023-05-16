@@ -1,9 +1,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../util/app_routes.dart';
 import '../service/auth_service.dart';
+import '../util/fonts.dart';
 
 class AuthController extends GetxController {
   final Rxn<User> user = Rxn<User>();
@@ -12,7 +14,49 @@ class AuthController extends GetxController {
   login(String id, String pw) => AuthService().login(id, pw);
 
   // 로그아웃
-  logout() => AuthService().logout();
+  logout() {
+    Get.defaultDialog(
+      title: '로그아웃',
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
+      content: Text('정말 로그아웃하시겠습니까?'),
+      actions: [
+        Container(
+          width: 100,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              backgroundColor: Colors.grey,
+              elevation: 0,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+            child: Text('취소', style: NotoSans.regular),
+          ),
+        ),
+        SizedBox(width: 20,),
+        Container(
+          width: 100,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              backgroundColor: Colors.red,
+              elevation: 0,
+            ),
+            onPressed: () {
+              Get.back();
+              AuthService().logout();
+            },
+            child: Text('확인', style: NotoSans.regular),
+          ),
+        ),
+      ],
+    );
+  }
 
   // 회원가입
   signup(String email, String pw) => AuthService().signup(email, pw);
