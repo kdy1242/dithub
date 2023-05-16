@@ -1,12 +1,12 @@
 
 import 'dart:developer';
 
-import 'package:dithub/controller/home_controller.dart';
-import 'package:dithub/view/screen/home_diary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../util/fonts.dart';
+import '../../controller/home_controller.dart';
+import '../../view/screen/home_diary_screen.dart';
+import '../../view/widget/home_diary_tab.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,41 +25,28 @@ class HomeScreen extends GetView<HomeController> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: controller.followingList.length,
+                itemCount: controller.followingList.length + 1,
                 itemBuilder: (context, index) {
-                  var friend = controller.followingList[index];
                   log('index($index): ${controller.selectedIndex == index }');
+                  if (index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.onPageTapped(index);
+                        },
+                        child: HomeDiaryTabItem(isSelected: controller.selectedIndex == index, friend: controller.userToFriend, me: true,),
+                      ),
+                    );
+                  }
+                  var friend = controller.followingList[index-1];
                   return Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: GestureDetector(
                       onTap: () {
                         controller.onPageTapped(index);
                       },
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: controller.selectedIndex == index ? Border.all(
-                                color: Colors.blue, // 선택된 인덱스일 때 파란색 테두리
-                                width: 2,
-                              ) : null,
-                            ),
-                            child: CircleAvatar(
-                              radius: 36,
-                              backgroundColor: Colors.grey,
-                              child: friend.profileImg == null ? Icon(Icons.person, color: Colors.white) : null,
-                              backgroundImage: friend.profileImg != null
-                                ? NetworkImage(friend.profileImg!)
-                                : null,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(friend.name, style: NotoSans.regular.copyWith(color: controller.selectedIndex == index ? Colors.blue : Colors.black)),
-                        ],
-                      ),
+                      child: HomeDiaryTabItem(isSelected: controller.selectedIndex == index, friend: friend, me: false),
                     ),
                   );
                 },
@@ -68,10 +55,13 @@ class HomeScreen extends GetView<HomeController> {
             Expanded(
               child: PageView.builder(
                 controller: controller.pageController,
-                itemCount: controller.followingList.length,
+                itemCount: controller.followingList.length + 1,
                 itemBuilder: (context, index) {
-                  var friend = controller.followingList[index];
-                  return HomeDiaryScreen(user: friend);
+                  if (index == 0) {
+                    return HomeDiaryScreen(user: controller.userToFriend, addBtnVisible: true);
+                  }
+                  var friend = controller.followingList[index - 1];
+                  return HomeDiaryScreen(user: friend, addBtnVisible: false);
                 }
               )
             ),
