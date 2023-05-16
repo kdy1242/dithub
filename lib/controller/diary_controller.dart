@@ -97,6 +97,27 @@ class DiaryController extends GetxController {
     selectedImage(null);
   }
 
+  // 다이어리 삭제
+  deleteDiary(Diary diary) async {
+    final diaryDocRef = instance.collection('diary').doc(user!.uid);
+    final diaryDocSnapshot = await diaryDocRef.get();
+
+    if (diaryDocSnapshot.exists) {
+      await diaryDocRef.update({
+        'diaryList': FieldValue.arrayRemove([diary.toMap()])
+      });
+    }
+
+    // 이미지가 있는 경우 해당 이미지도 삭제
+    if (diary.imageUrl != null) {
+      var ref = FirebaseStorage.instance.refFromURL(diary.imageUrl!);
+      await ref.delete();
+    }
+
+    diaryList.remove(diary);
+    Get.back();
+  }
+
   // 다이어리 가져오기
   getDiary() async {
     var res = await instance.collection('diary').doc(user!.uid).get();

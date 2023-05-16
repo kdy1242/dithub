@@ -34,8 +34,9 @@ class HomeScreen extends GetView<HomeController> {
                       child: GestureDetector(
                         onTap: () {
                           controller.onPageTapped(index);
+                          log('index($index): ${controller.selectedIndex == index}');
                         },
-                        child: HomeDiaryTabItem(isSelected: controller.selectedIndex == index, friend: controller.userToFriend, me: true,),
+                        child: HomeDiaryTabItem(isSelected: (controller.selectedIndex == index).obs, friend: controller.userToFriend, me: true,),
                       ),
                     );
                   }
@@ -45,8 +46,9 @@ class HomeScreen extends GetView<HomeController> {
                     child: GestureDetector(
                       onTap: () {
                         controller.onPageTapped(index);
+                        log('index($index): ${controller.selectedIndex == index}');
                       },
-                      child: HomeDiaryTabItem(isSelected: controller.selectedIndex == index, friend: friend, me: false),
+                      child: HomeDiaryTabItem(isSelected: (controller.selectedIndex == index).obs, friend: friend, me: false),
                     ),
                   );
                 },
