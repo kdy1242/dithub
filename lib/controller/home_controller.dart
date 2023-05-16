@@ -11,7 +11,7 @@ import 'auth_controller.dart';
 
 class HomeController extends GetxController {
   PageController pageController = PageController();
-  RxInt curPage = 0.obs;
+  RxInt selectedIndex = 0.obs;
 
   User? get user => FirebaseAuth.instance.currentUser;
   List<Friend> get followingList => Get.find<FriendsController>().followingList;
@@ -19,13 +19,13 @@ class HomeController extends GetxController {
   onPageTapped(int v) {
     pageController.animateToPage(v, duration: Duration(milliseconds: 300), curve: Curves.ease);
 
-    curPage.value = v;
+    selectedIndex.value = v;
   }
 
   @override
   void onClose() {
     super.onClose();
     pageController.dispose();
-    curPage.value = 0;
+    selectedIndex.value = 0;
   }
 }

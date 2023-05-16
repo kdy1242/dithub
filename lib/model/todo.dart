@@ -4,7 +4,7 @@ class Todo {
   String todo;
 
   Todo({
-    required this.isFinished,
+    this.isFinished = false,
     required this.todo,
   });
 

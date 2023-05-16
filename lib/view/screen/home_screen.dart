@@ -28,14 +28,12 @@ class HomeScreen extends GetView<HomeController> {
                 itemCount: controller.followingList.length,
                 itemBuilder: (context, index) {
                   var friend = controller.followingList[index];
-                  bool isSelected = index == controller.curPage.value;
-
+                  log('index($index): ${controller.selectedIndex == index }');
                   return Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: GestureDetector(
                       onTap: () {
                         controller.onPageTapped(index);
-                        log('index($index): $isSelected');
                       },
                       child: Column(
                         children: [
@@ -44,7 +42,7 @@ class HomeScreen extends GetView<HomeController> {
                             height: 36,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: isSelected ? Border.all(
+                              border: controller.selectedIndex == index ? Border.all(
                                 color: Colors.blue, // 선택된 인덱스일 때 파란색 테두리
                                 width: 2,
                               ) : null,
@@ -59,7 +57,7 @@ class HomeScreen extends GetView<HomeController> {
                             ),
                           ),
                           SizedBox(height: 8),
-                          Text(friend.name, style: NotoSans.regular.copyWith(color: isSelected ? Colors.blue : Colors.black)),
+                          Text(friend.name, style: NotoSans.regular.copyWith(color: controller.selectedIndex == index ? Colors.blue : Colors.black)),
                         ],
                       ),
                     ),

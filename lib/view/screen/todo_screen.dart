@@ -22,7 +22,15 @@ class TodoScreen extends GetView<TodoController> {
             Expanded(
               child: Stack(
                 children: [
-                  ListView(),
+                  Obx(
+                    () => ListView.builder(
+                      itemCount: controller.todoList.length,
+                      itemBuilder: (context, index) {
+                        var todo = controller.todoList[index];
+                        return Text('${todo.todo}');
+                      }
+                    ),
+                  ),
                   Positioned(
                     right: 0,
                     bottom: 0,
