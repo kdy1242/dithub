@@ -1,5 +1,6 @@
 
 import 'package:dithub/controller/todo_controller.dart';
+import 'package:dithub/view/widget/todo_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,7 @@ class TodoScreen extends GetView<TodoController> {
           children: [
             Text('Todo List', style: NotoSans.bold.copyWith(fontSize: 28)),
             Text('할 일을 관리해 보세요!', style: NotoSans.regular.copyWith(fontSize: 16)),
+            SizedBox(height: 16),
             Expanded(
               child: Stack(
                 children: [
@@ -27,7 +29,15 @@ class TodoScreen extends GetView<TodoController> {
                       itemCount: controller.todoList.length,
                       itemBuilder: (context, index) {
                         var todo = controller.todoList[index];
-                        return Text('${todo.todo}');
+                        return GestureDetector(
+                          onLongPress: () {
+                            controller.deleteTodo(index);
+                          },
+                          onTap: () {
+                            controller.toggleTodoStatus(index, !todo.isFinished.value);
+                          },
+                          child: TodoItem(todo: todo)
+                        );
                       }
                     ),
                   ),

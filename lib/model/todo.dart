@@ -1,16 +1,18 @@
 
+import 'package:get/get.dart';
+
 class Todo {
-  bool isFinished;
+  RxBool isFinished;
   String todo;
 
   Todo({
-    this.isFinished = false,
+    bool isFinished = false,
     required this.todo,
-  });
+  }) : isFinished = isFinished.obs;
 
   Map<String, dynamic> toMap() {
     return {
-      'isFinished': this.isFinished,
+      'isFinished': this.isFinished.value,
       'todo': this.todo,
     };
   }

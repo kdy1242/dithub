@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class TodoController extends GetxController {
   User? get user => FirebaseAuth.instance.currentUser;
   FirebaseFirestore instance = FirebaseFirestore.instance;
 
+  // 투두 저장
   saveTodo(Todo todo) async {
     final todoDocRef = instance.collection('todos').doc(user!.uid);
     final todoDocSnapshot = await todoDocRef.get();
@@ -29,6 +32,47 @@ class TodoController extends GetxController {
       });
     }
     todoList.add(todo);
+  }
+
+  // 투두 가져오기
+  getTodo() async {
+    var res = await instance.collection('todos').doc(user!.uid).get();
+    log('${res}');
+    if (res.data() != null) {
+      List todoListField = res.data()!['todoList'];
+      log('${todoListField}');
+      for (var todo in todoListField) {
+        todoList.add(Todo.fromMap(todo));
+      }
+    }
+  }
+
+  // 투두 완료 여부 토글
+  toggleTodoStatus(int index, bool value) async {
+
+    final todoDocRef = instance.collection('todos').doc(user!.uid);
+    final todoDocSnapshot = await todoDocRef.get();
+
+    if (todoDocSnapshot.exists) {
+      var todoListField = todoDocSnapshot.data()!['todoList'];
+      todoList[index].isFinished.value = value;
+      todoListField[index]['isFinished'] = value;
+      await todoDocRef.set({'todoList': todoListField});
+    }
+  }
+
+  // 투두 삭제
+  deleteTodo(int index) async {
+    final todo = todoList[index];
+    final todoDocRef = instance.collection('todos').doc(user!.uid);
+    await todoDocRef.update({
+      'todoList': FieldValue.arrayRemove([todo.toMap()]),
+    });
+    todoList.removeAt(index);
+  }
+
+  todoFinished() async {
+
   }
 
   addTodo() {
@@ -55,6 +99,7 @@ class TodoController extends GetxController {
             ),
             onPressed: () {
               Get.back();
+              todoController.text = '';
             },
             child: Text('취소', style: NotoSans.regular),
           ),
@@ -74,11 +119,19 @@ class TodoController extends GetxController {
               Todo todo = Todo(todo: todoController.text);
               saveTodo(todo);
               Get.back();
+              todoController.text = '';
             },
             child: Text('추가', style: NotoSans.regular),
           ),
         ),
       ],
     );
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    getTodo();
   }
 }
