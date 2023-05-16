@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../util/fonts.dart';
 import '../view/screen/friends_following_screen.dart';
 import '../view/screen/friends_find_screen.dart';
 import 'auth_controller.dart';
@@ -62,6 +63,7 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
         'following': [searchResult.value!.uid],
       });
     }
+    followingList.add(searchResult.value!);
   }
 
   // 팔로우중인 친구 가져오기
@@ -82,13 +84,51 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
 
   // 친구 삭제
   onTapDeleteBtn(Friend friend) async {
-    var deleteFriendId = friend.uid;
-
-    await instance.collection('following').doc(user!.uid).update({
-      'following': FieldValue.arrayRemove([deleteFriendId])
-    });
-
-    followingList.remove(friend);
+    Get.defaultDialog(
+      title: '친구 삭제',
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
+      content: Text('${friend.name}님을 삭제하시겠습니까?'),
+      actions: [
+        Container(
+          width: 100,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              backgroundColor: Colors.grey,
+              elevation: 0,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+            child: Text('취소', style: NotoSans.regular),
+          ),
+        ),
+        SizedBox(width: 20,),
+        Container(
+          width: 100,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              backgroundColor: Colors.blue,
+              elevation: 0,
+            ),
+            onPressed: () async {
+              var deleteFriendId = friend.uid;
+              await instance.collection('following').doc(user!.uid).update({
+                'following': FieldValue.arrayRemove([deleteFriendId])
+              });
+              followingList.remove(friend);
+              Get.back();
+            },
+            child: Text('삭제', style: NotoSans.regular),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
