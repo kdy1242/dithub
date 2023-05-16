@@ -29,6 +29,7 @@ class SetProfilePage extends GetView<SetProfileController> {
                       child: Obx(
                         () => CircleAvatar(
                           radius: 36,
+                          backgroundColor: Colors.grey[300],
                           backgroundImage: controller.selectedImage.value != null
                             ? FileImage(controller.selectedImage.value!)
                             : null,
@@ -71,7 +72,7 @@ class SetProfilePage extends GetView<SetProfileController> {
                       elevation: 0
                   ),
                   onPressed: controller.onTapStartBtn,
-                  child: Text('시작하기', style: NotoSans.regular),
+                  child: Text('설정하기', style: NotoSans.regular),
                 ),
               ),
             ],
