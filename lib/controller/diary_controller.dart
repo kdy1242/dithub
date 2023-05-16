@@ -43,7 +43,6 @@ class DiaryController extends GetxController {
 
   // 다이어리 추가
   addDiary() async {
-    // Get the current date
     DateTime currentDate = DateTime.now();
 
     String formattedDate = "${currentDate.year}-${currentDate.month}-${currentDate.day}";
@@ -69,7 +68,10 @@ class DiaryController extends GetxController {
       imageUrl = downloadUrl;
     }
 
+    String diaryId = FirebaseFirestore.instance.collection('diary').doc().id;
+
     Diary diary = Diary(
+      id: diaryId,
       uid: user!.uid,
       title: titleController.text,
       content: contentsController.text,
@@ -118,14 +120,59 @@ class DiaryController extends GetxController {
     Get.back();
   }
 
+  // 다이어리 수정
+  updateDiary(Diary diary, String newTitle, String newContent, File? newImage) async {
+    final diaryDocRef = instance.collection('diary').doc(user!.uid);
+    final diaryDocSnapshot = await diaryDocRef.get();
+
+    if (diaryDocSnapshot.exists) {
+      var diaryList = diaryDocSnapshot.data()?['diaryList'];
+      if (diaryList != null) {
+        List<dynamic> updatedDiaryList = List.from(diaryList);
+        int diaryIndex = updatedDiaryList.indexWhere((item) => item['id'] == diary.id);
+
+        if (diaryIndex != -1) {
+          if (newImage != null) {
+            // 기존 이미지 삭제
+            if (diary.imageUrl != null) {
+              await FirebaseStorage.instance.refFromURL(diary.imageUrl!).delete();
+            }
+
+            // 새 이미지 업로드
+            var ref = FirebaseStorage.instance.ref('diary/${user!.uid}/${diary.timestamp}');
+            await ref.putFile(newImage);
+            var downloadUrl = await ref.getDownloadURL();
+            diary.imageUrl = downloadUrl;
+            updatedDiaryList[diaryIndex]['imageUrl'] = downloadUrl;
+          }
+
+          // 제목과 내용 업데이트
+          updatedDiaryList[diaryIndex]['title'] = newTitle;
+          updatedDiaryList[diaryIndex]['content'] = newContent;
+
+          await diaryDocRef.update({
+            'diaryList': updatedDiaryList,
+          });
+
+          diary.title = newTitle;
+          diary.content = newContent;
+
+          // 다이어리 리스트 갱신
+          diaryList.refresh();
+          Get.offAllNamed(AppRoutes.main);
+        }
+      }
+    }
+  }
+
   // 다이어리 가져오기
   getDiary() async {
     var res = await instance.collection('diary').doc(user!.uid).get();
     if (res.data() != null) {
       List<dynamic> diaryListField = res.data()!['diaryList'];
       List<Diary> sortedDiaryList = diaryListField
-          .map((diary) => Diary.fromMap(diary))
-          .toList()
+        .map((diary) => Diary.fromMap(diary))
+        .toList()
         ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
       diaryList.value = sortedDiaryList;

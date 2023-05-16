@@ -2,12 +2,12 @@
 import 'package:dithub/controller/diary_controller.dart';
 import 'package:dithub/model/diary.dart';
 import 'package:dithub/util/fonts.dart';
+import 'package:dithub/view/page/diary_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiaryDetailPage extends GetView<DiaryController> {
   const DiaryDetailPage({Key? key, required this.diary}) : super(key: key);
-  static const String route = '/diary/detail';
   final Diary diary;
 
   @override
@@ -20,7 +20,12 @@ class DiaryDetailPage extends GetView<DiaryController> {
         foregroundColor: Colors.black,
         elevation: 0,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+          IconButton(
+            onPressed: (){
+              Get.off(() => DiaryEditPage(diary));
+            },
+            icon: Icon(Icons.edit)
+          ),
           IconButton(
             onPressed: (){
               controller.deleteDiary(diary);

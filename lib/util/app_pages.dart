@@ -1,11 +1,11 @@
 
-import 'package:dithub/view/page/diary_add_page.dart';
-import 'package:dithub/view/page/diary_detail_page.dart';
-import 'package:dithub/view/page/set_profile_page.dart';
 import 'package:get/get.dart';
 
+import '../view/page/diary_edit_page.dart';
 import '../view/page/login_page.dart';
 import '../view/page/main_page.dart';
+import '../view/page/diary_add_page.dart';
+import '../view/page/set_profile_page.dart';
 import '../view/page/signup_page.dart';
 
 class AppPages {
