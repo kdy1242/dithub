@@ -179,6 +179,22 @@ class DiaryController extends GetxController {
     }
   }
 
+  Future<RxList<Diary>> getFriendDiary(String uid) async {
+    RxList<Diary> sortedDiaryList = <Diary>[].obs;
+    var res = await instance.collection('diary').doc(uid).get();
+    if (res.data() != null)  {
+      List<dynamic> diaryListField = res.data()!['diaryList'];
+      sortedDiaryList
+        ..assignAll(diaryListField
+            .map((diary) => Diary.fromMap(diary))
+            .toList()
+          ..sort((a, b) => b.timestamp.compareTo(a.timestamp)));
+
+      return sortedDiaryList;
+    }
+    return <Diary>[].obs;
+  }
+
   @override
   void onInit() {
     super.onInit();

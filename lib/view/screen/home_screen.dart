@@ -60,10 +60,10 @@ class HomeScreen extends GetView<HomeController> {
                 itemCount: controller.followingList.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
-                    return HomeDiaryScreen(user: controller.userToFriend, addBtnVisible: true);
+                    return HomeDiaryScreen(user: controller.userToFriend, addBtnVisible: true, me: true);
                   }
                   var friend = controller.followingList[index - 1];
-                  return HomeDiaryScreen(user: friend, addBtnVisible: false);
+                  return HomeDiaryScreen(user: friend, addBtnVisible: false, me: false);
                 }
               )
             ),
