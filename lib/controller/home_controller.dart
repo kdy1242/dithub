@@ -1,13 +1,10 @@
 
-import 'dart:developer';
-
 import 'package:dithub/controller/friends_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../model/friend.dart';
-import 'auth_controller.dart';
 
 class HomeController extends GetxController {
   PageController pageController = PageController();

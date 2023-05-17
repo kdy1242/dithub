@@ -9,9 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../service/auth_service.dart';
-import 'auth_controller.dart';
-
 class MainController extends GetxController {
   var pageController = PageController();
   RxInt curPage = 0.obs;

@@ -71,10 +71,6 @@ class TodoController extends GetxController {
     todoList.removeAt(index);
   }
 
-  todoFinished() async {
-
-  }
-
   addTodo() {
     Get.defaultDialog(
       title: '할 일 추가하기',

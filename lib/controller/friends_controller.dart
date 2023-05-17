@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import '../util/fonts.dart';
 import '../view/screen/friends_following_screen.dart';
 import '../view/screen/friends_find_screen.dart';
-import 'auth_controller.dart';
 
 class FriendsController extends GetxController with GetSingleTickerProviderStateMixin {
   late TabController tabController;
@@ -36,8 +35,6 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
   // 친구 검색
   searchFriend() async {
     var res = await instance.collection('users').where('email', isEqualTo: searchEmailController.text).get();
-    // searchResult(res.docs.first.data());
-
     if (res.docs.isNotEmpty) {
       searchResult(Friend.fromMap(res.docs.first.data()));
       print(searchResult);
@@ -49,7 +46,6 @@ class FriendsController extends GetxController with GetSingleTickerProviderState
   // 팔로잉
   followFriend() async {
     final followDocRef = instance.collection('following').doc(user!.uid);
-
     final followDocSnapshot = await followDocRef.get();
 
     if (followDocSnapshot.exists) {

@@ -1,8 +1,6 @@
 
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../service/auth_service.dart';
 import '../util/app_routes.dart';
-import 'auth_controller.dart';
 
 class SetProfileController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -36,9 +33,7 @@ class SetProfileController extends GetxController {
     }
 
     await user!.updateDisplayName(nameController.text);
-
     await AuthService().saveUserInfoToFirestore(user!);
-
     Get.offAllNamed(AppRoutes.main);
   }
 
@@ -46,10 +41,5 @@ class SetProfileController extends GetxController {
   void onInit() {
     super.onInit();
     nameController.text = user!.displayName ?? '';
-  }
-
-  @override
-  void onClose() async {
-    super.onClose();
   }
 }
